@@ -1,12 +1,14 @@
 package com.luanrnunes.restfulapimodel.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luanrnunes.restfulapimodel.domain.User;
 import com.luanrnunes.restfulapimodel.repository.UserRepository;
+import com.luanrnunes.restfulapimodel.services.exception.ObjectNotFoundException;
 
 @Service /*Anotation que indica uma classe de servico que pode ser injetavel em outras classes*/
 public class UserService {
@@ -21,4 +23,10 @@ public class UserService {
 		return repo.findAll();			/*findAll vai trazer todos os objetos do tipo User*/
 	}
 	
-}
+	public User findById (String id) {
+		Optional<User> obj = repo.findById(id);
+			return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		}
+	}
+	
+
