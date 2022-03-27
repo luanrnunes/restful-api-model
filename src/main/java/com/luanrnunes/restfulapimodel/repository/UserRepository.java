@@ -8,4 +8,6 @@ import com.luanrnunes.restfulapimodel.domain.User;
 @Repository /*Anotation Spring que indica um repositorio*/
 public interface UserRepository extends MongoRepository<User, String>{
 
+	
+
 }

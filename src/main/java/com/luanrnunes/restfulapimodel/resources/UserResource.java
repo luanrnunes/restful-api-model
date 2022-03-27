@@ -1,14 +1,17 @@
 package com.luanrnunes.restfulapimodel.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.luanrnunes.restfulapimodel.domain.User;
 import com.luanrnunes.restfulapimodel.dto.UserDTO;
@@ -37,4 +40,13 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));	/*Retorna com o status ok e traz a lista no corpo do retorno*/
 	}
 
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {		
+		User obj = service.fromDTO(objDto); /*Converte DTO para user*/
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build(); /*Retorna um codigo 201 e o cabeçalho contendo a localizacao do ultimo recurso criado*/
+	
+}
+	
 }
