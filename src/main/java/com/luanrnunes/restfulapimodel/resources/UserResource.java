@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.luanrnunes.restfulapimodel.domain.Post;
 import com.luanrnunes.restfulapimodel.domain.User;
 import com.luanrnunes.restfulapimodel.dto.UserDTO;
 import com.luanrnunes.restfulapimodel.services.UserService;
@@ -63,6 +64,12 @@ public class UserResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 }
+	
+	@RequestMapping(value="/{id}/posts", method=RequestMethod.GET) /*Notation que indica o metodo request HTTP*/
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {		/*PathVariable indica que o ID recebido deve casar com a URL*/
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());	/*Retorna com o status ok e traz a lista no corpo do retorno*/
+	}
 	
 	
 }
