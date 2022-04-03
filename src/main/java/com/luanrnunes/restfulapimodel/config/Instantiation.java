@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.luanrnunes.restfulapimodel.domain.Post;
 import com.luanrnunes.restfulapimodel.domain.User;
+import com.luanrnunes.restfulapimodel.dto.AuthorDTO;
 import com.luanrnunes.restfulapimodel.repository.PostRepository;
 import com.luanrnunes.restfulapimodel.repository.UserRepository;
 
@@ -35,10 +36,11 @@ public class Instantiation implements CommandLineRunner{
 		User marcos = new User(null, "Marcos Silva", "marcos@marcos.com");
 		User fulano = new User(null, "Fulano Almeida", "fulano@fulano.com");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2021"), "Belo dia!", "Hoje é um dia muito belo!", eduarda);
-		Post post2 = new Post(null, sdf.parse("21/03/2021"), "Notícia ruim", "Tenho uma notícia um pouco desagradável", marcos);
-		
 		userRepository.saveAll(Arrays.asList(eduarda,marcos,fulano));
+		
+		Post post1 = new Post(null, sdf.parse("21/03/2021"), "Belo dia!", "Hoje é um dia muito belo!", new AuthorDTO(eduarda));
+		Post post2 = new Post(null, sdf.parse("21/03/2021"), "Notícia ruim", "Tenho uma notícia um pouco desagradável", new AuthorDTO(marcos));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
 	}
